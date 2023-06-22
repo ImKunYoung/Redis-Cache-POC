@@ -3,6 +3,9 @@ package com.poc.redis.application.mapper;
 import com.poc.redis.application.dto.ProductDTO;
 import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.application.dto.ShoppingCartDTO;
+import com.poc.redis.domain.model.Product;
+import com.poc.redis.domain.model.ProductOrder;
+import com.poc.redis.domain.model.ShoppingCart;
 import org.mapstruct.*;
 
 /**
