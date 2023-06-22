@@ -2,8 +2,8 @@ package com.poc.redis.web.rest;
 
 import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
 
-import com.poc.redis.config.KafkaSseConsumer;
-import com.poc.redis.config.KafkaSseProducer;
+import com.poc.redis.infrastructure.config.KafkaSseConsumer;
+import com.poc.redis.infrastructure.config.KafkaSseProducer;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;

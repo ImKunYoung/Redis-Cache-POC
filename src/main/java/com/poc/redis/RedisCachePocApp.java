@@ -1,7 +1,7 @@
 package com.poc.redis;
 
-import com.poc.redis.config.ApplicationProperties;
-import com.poc.redis.config.CRLFLogConverter;
+import com.poc.redis.infrastructure.config.ApplicationProperties;
+import com.poc.redis.infrastructure.config.CRLFLogConverter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;

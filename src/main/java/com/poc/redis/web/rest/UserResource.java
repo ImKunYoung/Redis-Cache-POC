@@ -1,15 +1,15 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.config.Constants;
-import com.poc.redis.domain.User;
-import com.poc.redis.repository.UserRepository;
-import com.poc.redis.security.AuthoritiesConstants;
-import com.poc.redis.service.MailService;
-import com.poc.redis.service.UserService;
-import com.poc.redis.service.dto.AdminUserDTO;
-import com.poc.redis.web.rest.errors.BadRequestAlertException;
-import com.poc.redis.web.rest.errors.EmailAlreadyUsedException;
-import com.poc.redis.web.rest.errors.LoginAlreadyUsedException;
+import com.poc.redis.domain.model.User;
+import com.poc.redis.infrastructure.config.Constants;
+import com.poc.redis.infrastructure.repository.UserRepository;
+import com.poc.redis.infrastructure.security.AuthoritiesConstants;
+import com.poc.redis.application.service.MailService;
+import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.dto.AdminUserDTO;
+import com.poc.redis.web.errors.BadRequestAlertException;
+import com.poc.redis.web.errors.EmailAlreadyUsedException;
+import com.poc.redis.web.errors.LoginAlreadyUsedException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -35,7 +35,7 @@ import tech.jhipster.web.util.ResponseUtil;
 /**
  * REST controller for managing users.
  * <p>
- * This class accesses the {@link com.poc.redis.domain.User} entity, and needs to fetch its collection of authorities.
+ * This class accesses the {@link User} entity, and needs to fetch its collection of authorities.
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join

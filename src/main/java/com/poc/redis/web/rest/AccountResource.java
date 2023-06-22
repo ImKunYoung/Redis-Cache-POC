@@ -1,15 +1,15 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.User;
-import com.poc.redis.repository.UserRepository;
-import com.poc.redis.security.SecurityUtils;
-import com.poc.redis.service.MailService;
-import com.poc.redis.service.UserService;
-import com.poc.redis.service.dto.AdminUserDTO;
-import com.poc.redis.service.dto.PasswordChangeDTO;
-import com.poc.redis.web.rest.errors.*;
-import com.poc.redis.web.rest.vm.KeyAndPasswordVM;
-import com.poc.redis.web.rest.vm.ManagedUserVM;
+import com.poc.redis.domain.model.User;
+import com.poc.redis.infrastructure.repository.UserRepository;
+import com.poc.redis.infrastructure.security.SecurityUtils;
+import com.poc.redis.application.service.MailService;
+import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.dto.AdminUserDTO;
+import com.poc.redis.application.dto.PasswordChangeDTO;
+import com.poc.redis.web.errors.*;
+import com.poc.redis.web.vm.KeyAndPasswordVM;
+import com.poc.redis.web.vm.ManagedUserVM;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
