@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.service.UserService;
-import com.poc.redis.service.dto.UserDTO;
+import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.dto.UserDTO;
 import java.util.*;
 import java.util.Collections;
 import org.slf4j.Logger;

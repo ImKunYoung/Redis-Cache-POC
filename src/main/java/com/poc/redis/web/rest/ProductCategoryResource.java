@@ -1,9 +1,9 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.ProductCategory;
-import com.poc.redis.repository.ProductCategoryRepository;
-import com.poc.redis.service.ProductCategoryService;
-import com.poc.redis.web.rest.errors.BadRequestAlertException;
+import com.poc.redis.domain.model.ProductCategory;
+import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
+import com.poc.redis.application.service.ProductCategoryService;
+import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.poc.redis.domain.ProductCategory}.
+ * REST controller for managing {@link ProductCategory}.
  */
 @RestController
 @RequestMapping("/api")

@@ -1,9 +1,9 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.ShoppingCart;
-import com.poc.redis.repository.ShoppingCartRepository;
-import com.poc.redis.service.ShoppingCartService;
-import com.poc.redis.web.rest.errors.BadRequestAlertException;
+import com.poc.redis.domain.model.ShoppingCart;
+import com.poc.redis.infrastructure.repository.ShoppingCartRepository;
+import com.poc.redis.application.service.ShoppingCartService;
+import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -20,7 +20,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.poc.redis.domain.ShoppingCart}.
+ * REST controller for managing {@link ShoppingCart}.
  */
 @RestController
 @RequestMapping("/api")
