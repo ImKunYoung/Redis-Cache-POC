@@ -1,5 +1,10 @@
-name: Application CI
-on: [push, pull_request]
+name: SonarCloud
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   pipeline:
     name: RedisCachePOC pipeline
