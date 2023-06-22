@@ -1,7 +1,7 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.domain.model.CustomerDetails;
 import com.poc.redis.repository.CustomerDetailsRepository;
-import com.poc.redis.service.CustomerDetailsService;
 import com.poc.redis.application.dto.CustomerDetailsDTO;
 import com.poc.redis.application.mapper.CustomerDetailsMapper;
 import java.util.Optional;

@@ -1,5 +1,6 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.domain.model.ProductOrder;
 import java.util.List;
 import java.util.Optional;
@@ -13,33 +14,33 @@ public interface ProductOrderService {
     /**
      * Save a productOrder.
      *
-     * @param productOrder the entity to save.
+     * @param productOrderDTO the entity to save.
      * @return the persisted entity.
      */
-    ProductOrder save(ProductOrder productOrder);
+    ProductOrderDTO save(ProductOrderDTO productOrderDTO);
 
     /**
      * Updates a productOrder.
      *
-     * @param productOrder the entity to update.
+     * @param productOrderDTO the entity to update.
      * @return the persisted entity.
      */
-    ProductOrder update(ProductOrder productOrder);
+    ProductOrderDTO update(ProductOrderDTO productOrderDTO);
 
     /**
      * Partially updates a productOrder.
      *
-     * @param productOrder the entity to update partially.
+     * @param productOrderDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<ProductOrder> partialUpdate(ProductOrder productOrder);
+    Optional<ProductOrderDTO> partialUpdate(ProductOrderDTO productOrderDTO);
 
     /**
      * Get all the productOrders.
      *
      * @return the list of entities.
      */
-    List<ProductOrder> findAll();
+    List<ProductOrderDTO> findAll();
 
     /**
      * Get all the productOrders with eager load of many-to-many relationships.
@@ -47,7 +48,7 @@ public interface ProductOrderService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<ProductOrder> findAllWithEagerRelationships(Pageable pageable);
+    Page<ProductOrderDTO> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" productOrder.
@@ -55,7 +56,7 @@ public interface ProductOrderService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ProductOrder> findOne(Long id);
+    Optional<ProductOrderDTO> findOne(Long id);
 
     /**
      * Delete the "id" productOrder.

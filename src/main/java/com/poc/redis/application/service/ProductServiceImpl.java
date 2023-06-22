@@ -1,7 +1,7 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.domain.model.Product;
 import com.poc.redis.repository.ProductRepository;
-import com.poc.redis.service.ProductService;
 import com.poc.redis.application.dto.ProductDTO;
 import com.poc.redis.application.mapper.ProductMapper;
 import java.util.Optional;
