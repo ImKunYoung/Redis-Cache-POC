@@ -2,7 +2,7 @@ package com.poc.redis.web.rest;
 
 import com.poc.redis.repository.ProductRepository;
 import com.poc.redis.service.ProductService;
-import com.poc.redis.service.dto.ProductDTO;
+import com.poc.redis.application.dto.ProductDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;

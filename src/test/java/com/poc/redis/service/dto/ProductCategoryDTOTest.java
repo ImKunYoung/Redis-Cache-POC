@@ -2,6 +2,7 @@ package com.poc.redis.service.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 

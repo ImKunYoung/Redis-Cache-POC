@@ -1,4 +1,4 @@
-package com.poc.redis.service.dto;
+package com.poc.redis.application.dto;
 
 import com.poc.redis.domain.enumeration.OrderStatus;
 import com.poc.redis.domain.enumeration.PaymentMethod;

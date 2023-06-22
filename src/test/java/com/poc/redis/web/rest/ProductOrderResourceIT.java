@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.poc.redis.IntegrationTest;
 import com.poc.redis.repository.ProductOrderRepository;
 import com.poc.redis.service.ProductOrderService;
-import com.poc.redis.service.dto.ProductOrderDTO;
+import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.application.mapper.ProductOrderMapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;

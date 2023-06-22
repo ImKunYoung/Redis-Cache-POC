@@ -2,7 +2,7 @@ package com.poc.redis.web.rest;
 
 import com.poc.redis.repository.ShoppingCartRepository;
 import com.poc.redis.service.ShoppingCartService;
-import com.poc.redis.service.dto.ShoppingCartDTO;
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -1,6 +1,6 @@
 package com.poc.redis.service;
 
-import com.poc.redis.service.dto.ShoppingCartDTO;
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import java.util.List;
 import java.util.Optional;
 

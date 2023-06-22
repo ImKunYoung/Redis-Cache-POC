@@ -1,7 +1,7 @@
 package com.poc.redis.application.mapper;
 
-import com.poc.redis.service.dto.CustomerDetailsDTO;
-import com.poc.redis.service.dto.ShoppingCartDTO;
+import com.poc.redis.application.dto.CustomerDetailsDTO;
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import org.mapstruct.*;
 
 /**

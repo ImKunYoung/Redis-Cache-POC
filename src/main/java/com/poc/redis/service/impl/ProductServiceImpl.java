@@ -2,7 +2,7 @@ package com.poc.redis.service.impl;
 
 import com.poc.redis.repository.ProductRepository;
 import com.poc.redis.service.ProductService;
-import com.poc.redis.service.dto.ProductDTO;
+import com.poc.redis.application.dto.ProductDTO;
 import com.poc.redis.application.mapper.ProductMapper;
 import java.util.Optional;
 import org.slf4j.Logger;

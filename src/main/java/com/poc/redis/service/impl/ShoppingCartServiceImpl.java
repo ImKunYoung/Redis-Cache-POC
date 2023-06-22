@@ -2,7 +2,7 @@ package com.poc.redis.service.impl;
 
 import com.poc.redis.repository.ShoppingCartRepository;
 import com.poc.redis.service.ShoppingCartService;
-import com.poc.redis.service.dto.ShoppingCartDTO;
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import com.poc.redis.application.mapper.ShoppingCartMapper;
 import java.util.LinkedList;
 import java.util.List;

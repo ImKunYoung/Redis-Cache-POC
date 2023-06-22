@@ -1,4 +1,4 @@
-package com.poc.redis.service.dto;
+package com.poc.redis.application.dto;
 
 import java.io.Serializable;
 import java.util.Objects;

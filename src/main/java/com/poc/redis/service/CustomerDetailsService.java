@@ -1,6 +1,6 @@
 package com.poc.redis.service;
 
-import com.poc.redis.service.dto.CustomerDetailsDTO;
+import com.poc.redis.application.dto.CustomerDetailsDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

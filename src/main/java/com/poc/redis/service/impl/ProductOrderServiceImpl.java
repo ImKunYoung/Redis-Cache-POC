@@ -2,7 +2,7 @@ package com.poc.redis.service.impl;
 
 import com.poc.redis.repository.ProductOrderRepository;
 import com.poc.redis.service.ProductOrderService;
-import com.poc.redis.service.dto.ProductOrderDTO;
+import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.application.mapper.ProductOrderMapper;
 import java.util.LinkedList;
 import java.util.List;
