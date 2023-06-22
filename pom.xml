@@ -82,7 +82,8 @@
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
-
+        <sonar.organization>imkunyoung</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <!-- jhipster-needle-maven-property -->
     </properties>
 
