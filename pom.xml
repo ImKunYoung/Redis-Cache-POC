@@ -133,16 +133,6 @@
             <artifactId>redisson</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webmvc-core</artifactId>
         </dependency>
@@ -202,11 +192,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>jdbc</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
@@ -231,30 +216,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit5-api</artifactId>
-            <version>${archunit-junit5.version}</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
         <!-- https://www.archunit.org/userguide/html/000_Index.html#_junit_5 -->
-        <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit5-engine</artifactId>
-            <version>${archunit-junit5.version}</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream</artifactId>
@@ -262,16 +225,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-test-support</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>kafka</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
@@ -525,41 +478,6 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>pre-unit-tests</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
-                        <execution>
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>pre-integration-tests</id>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                        </execution>
-                        <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
-                        <execution>
-                            <id>post-integration-tests</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>com.google.cloud.tools</groupId>
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>${jib-maven-plugin.version}</version>
@@ -706,14 +624,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <!-- Force alphabetical order to have a reproducible build -->
-                        <runOrder>alphabetical</runOrder>
-                        <excludes>
-                            <exclude>**/*IT*</exclude>
-                            <exclude>**/*IntTest*</exclude>
-                        </excludes>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -786,51 +696,8 @@
                 </dependency>
             </dependencies>
             <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <testExcludes>
-                                <testExclude>com/poc/redis/config/MariadbTestContainer.java</testExclude>
-                            </testExcludes>
-                        </configuration>
-                    </plugin>
-
-                </plugins>
                 <pluginManagement>
                     <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-failsafe-plugin</artifactId>
-                            <version>${maven-failsafe-plugin.version}</version>
-                            <configuration>
-                                <!-- Due to spring-boot repackage, without adding this property test classes are not found
-                                     See https://github.com/spring-projects/spring-boot/issues/6254 -->
-                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-                                <!-- Force alphabetical order to have a reproducible build -->
-                                <runOrder>alphabetical</runOrder>
-                                <includes>
-                                    <include>**/*IT*</include>
-                                    <include>**/*IntTest*</include>
-                                </includes>
-                                <argLine>@{argLine} -Dspring.profiles.active=testdev</argLine>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>integration-test</id>
-                                    <goals>
-                                        <goal>integration-test</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>verify</id>
-                                    <goals>
-                                        <goal>verify</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
                         <plugin>
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
@@ -883,11 +750,6 @@
             <id>prod</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.testcontainers</groupId>
-                    <artifactId>mariadb</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
                     <groupId>org.mariadb.jdbc</groupId>
                     <artifactId>mariadb-java-client</artifactId>
                 </dependency>
@@ -895,37 +757,6 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-failsafe-plugin</artifactId>
-                            <version>${maven-failsafe-plugin.version}</version>
-                            <configuration>
-                                <!-- Due to spring-boot repackage, without adding this property test classes are not found
-                                     See https://github.com/spring-projects/spring-boot/issues/6254 -->
-                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-                                <!-- Force alphabetical order to have a reproducible build -->
-                                <runOrder>alphabetical</runOrder>
-                                <includes>
-                                    <include>**/*IT*</include>
-                                    <include>**/*IntTest*</include>
-                                </includes>
-                                <argLine>@{argLine} -Dspring.profiles.active=testprod</argLine>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>integration-test</id>
-                                    <goals>
-                                        <goal>integration-test</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>verify</id>
-                                    <goals>
-                                        <goal>verify</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
                         <plugin>
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
