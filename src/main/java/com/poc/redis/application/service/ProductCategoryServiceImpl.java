@@ -1,8 +1,9 @@
 package com.poc.redis.application.service;
 
-import com.poc.redis.domain.model.ProductCategory;
-import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
-
+import com.poc.redis.repository.ProductCategoryRepository;
+import com.poc.redis.service.ProductCategoryService;
+import com.poc.redis.application.dto.ProductCategoryDTO;
+import com.poc.redis.application.mapper.ProductCategoryMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,53 +23,56 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
+    private final ProductCategoryMapper productCategoryMapper;
+
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository, ProductCategoryMapper productCategoryMapper) {
         this.productCategoryRepository = productCategoryRepository;
+        this.productCategoryMapper = productCategoryMapper;
     }
 
     @Override
-    public ProductCategory save(ProductCategory productCategory) {
-        log.debug("Request to save ProductCategory : {}", productCategory);
-        return productCategoryRepository.save(productCategory);
+    public ProductCategoryDTO save(ProductCategoryDTO productCategoryDTO) {
+        log.debug("Request to save ProductCategory : {}", productCategoryDTO);
+        ProductCategory productCategory = productCategoryMapper.toEntity(productCategoryDTO);
+        productCategory = productCategoryRepository.save(productCategory);
+        return productCategoryMapper.toDto(productCategory);
     }
 
     @Override
-    public ProductCategory update(ProductCategory productCategory) {
-        log.debug("Request to update ProductCategory : {}", productCategory);
-        return productCategoryRepository.save(productCategory);
+    public ProductCategoryDTO update(ProductCategoryDTO productCategoryDTO) {
+        log.debug("Request to update ProductCategory : {}", productCategoryDTO);
+        ProductCategory productCategory = productCategoryMapper.toEntity(productCategoryDTO);
+        productCategory = productCategoryRepository.save(productCategory);
+        return productCategoryMapper.toDto(productCategory);
     }
 
     @Override
-    public Optional<ProductCategory> partialUpdate(ProductCategory productCategory) {
-        log.debug("Request to partially update ProductCategory : {}", productCategory);
+    public Optional<ProductCategoryDTO> partialUpdate(ProductCategoryDTO productCategoryDTO) {
+        log.debug("Request to partially update ProductCategory : {}", productCategoryDTO);
 
         return productCategoryRepository
-            .findById(productCategory.getId())
+            .findById(productCategoryDTO.getId())
             .map(existingProductCategory -> {
-                if (productCategory.getName() != null) {
-                    existingProductCategory.setName(productCategory.getName());
-                }
-                if (productCategory.getDescription() != null) {
-                    existingProductCategory.setDescription(productCategory.getDescription());
-                }
+                productCategoryMapper.partialUpdate(existingProductCategory, productCategoryDTO);
 
                 return existingProductCategory;
             })
-            .map(productCategoryRepository::save);
+            .map(productCategoryRepository::save)
+            .map(productCategoryMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductCategory> findAll(Pageable pageable) {
+    public Page<ProductCategoryDTO> findAll(Pageable pageable) {
         log.debug("Request to get all ProductCategories");
-        return productCategoryRepository.findAll(pageable);
+        return productCategoryRepository.findAll(pageable).map(productCategoryMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ProductCategory> findOne(Long id) {
+    public Optional<ProductCategoryDTO> findOne(Long id) {
         log.debug("Request to get ProductCategory : {}", id);
-        return productCategoryRepository.findById(id);
+        return productCategoryRepository.findById(id).map(productCategoryMapper::toDto);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.poc.redis.application.service;
 
-import com.poc.redis.domain.model.Product;
-import com.poc.redis.infrastructure.repository.ProductRepository;
-
+import com.poc.redis.repository.ProductRepository;
+import com.poc.redis.service.ProductService;
+import com.poc.redis.application.dto.ProductDTO;
+import com.poc.redis.application.mapper.ProductMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,69 +23,60 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    private final ProductMapper productMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     @Override
-    public Product save(Product product) {
-        log.debug("Request to save Product : {}", product);
-        return productRepository.save(product);
+    public ProductDTO save(ProductDTO productDTO) {
+        log.debug("Request to save Product : {}", productDTO);
+        Product product = productMapper.toEntity(productDTO);
+        product = productRepository.save(product);
+        return productMapper.toDto(product);
     }
 
     @Override
-    public Product update(Product product) {
-        log.debug("Request to update Product : {}", product);
-        return productRepository.save(product);
+    public ProductDTO update(ProductDTO productDTO) {
+        log.debug("Request to update Product : {}", productDTO);
+        Product product = productMapper.toEntity(productDTO);
+        product = productRepository.save(product);
+        return productMapper.toDto(product);
     }
 
     @Override
-    public Optional<Product> partialUpdate(Product product) {
-        log.debug("Request to partially update Product : {}", product);
+    public Optional<ProductDTO> partialUpdate(ProductDTO productDTO) {
+        log.debug("Request to partially update Product : {}", productDTO);
 
         return productRepository
-            .findById(product.getId())
+            .findById(productDTO.getId())
             .map(existingProduct -> {
-                if (product.getName() != null) {
-                    existingProduct.setName(product.getName());
-                }
-                if (product.getDescription() != null) {
-                    existingProduct.setDescription(product.getDescription());
-                }
-                if (product.getPrice() != null) {
-                    existingProduct.setPrice(product.getPrice());
-                }
-                if (product.getProductSize() != null) {
-                    existingProduct.setProductSize(product.getProductSize());
-                }
-                if (product.getImage() != null) {
-                    existingProduct.setImage(product.getImage());
-                }
-                if (product.getImageContentType() != null) {
-                    existingProduct.setImageContentType(product.getImageContentType());
-                }
+                productMapper.partialUpdate(existingProduct, productDTO);
 
                 return existingProduct;
             })
-            .map(productRepository::save);
+            .map(productRepository::save)
+            .map(productMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> findAll(Pageable pageable) {
+    public Page<ProductDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Products");
-        return productRepository.findAll(pageable);
+        return productRepository.findAll(pageable).map(productMapper::toDto);
     }
 
-    public Page<Product> findAllWithEagerRelationships(Pageable pageable) {
-        return productRepository.findAllWithEagerRelationships(pageable);
+    public Page<ProductDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return productRepository.findAllWithEagerRelationships(pageable).map(productMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Product> findOne(Long id) {
+    public Optional<ProductDTO> findOne(Long id) {
         log.debug("Request to get Product : {}", id);
-        return productRepository.findOneWithEagerRelationships(id);
+        return productRepository.findOneWithEagerRelationships(id).map(productMapper::toDto);
     }
 
     @Override

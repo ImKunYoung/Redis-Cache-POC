@@ -1,8 +1,9 @@
 package com.poc.redis.application.service;
 
-import com.poc.redis.domain.model.CustomerDetails;
-import com.poc.redis.infrastructure.repository.CustomerDetailsRepository;
-
+import com.poc.redis.repository.CustomerDetailsRepository;
+import com.poc.redis.service.CustomerDetailsService;
+import com.poc.redis.application.dto.CustomerDetailsDTO;
+import com.poc.redis.application.mapper.CustomerDetailsMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,69 +23,60 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
     private final CustomerDetailsRepository customerDetailsRepository;
 
-    public CustomerDetailsServiceImpl(CustomerDetailsRepository customerDetailsRepository) {
+    private final CustomerDetailsMapper customerDetailsMapper;
+
+    public CustomerDetailsServiceImpl(CustomerDetailsRepository customerDetailsRepository, CustomerDetailsMapper customerDetailsMapper) {
         this.customerDetailsRepository = customerDetailsRepository;
+        this.customerDetailsMapper = customerDetailsMapper;
     }
 
     @Override
-    public CustomerDetails save(CustomerDetails customerDetails) {
-        log.debug("Request to save CustomerDetails : {}", customerDetails);
-        return customerDetailsRepository.save(customerDetails);
+    public CustomerDetailsDTO save(CustomerDetailsDTO customerDetailsDTO) {
+        log.debug("Request to save CustomerDetails : {}", customerDetailsDTO);
+        CustomerDetails customerDetails = customerDetailsMapper.toEntity(customerDetailsDTO);
+        customerDetails = customerDetailsRepository.save(customerDetails);
+        return customerDetailsMapper.toDto(customerDetails);
     }
 
     @Override
-    public CustomerDetails update(CustomerDetails customerDetails) {
-        log.debug("Request to update CustomerDetails : {}", customerDetails);
-        return customerDetailsRepository.save(customerDetails);
+    public CustomerDetailsDTO update(CustomerDetailsDTO customerDetailsDTO) {
+        log.debug("Request to update CustomerDetails : {}", customerDetailsDTO);
+        CustomerDetails customerDetails = customerDetailsMapper.toEntity(customerDetailsDTO);
+        customerDetails = customerDetailsRepository.save(customerDetails);
+        return customerDetailsMapper.toDto(customerDetails);
     }
 
     @Override
-    public Optional<CustomerDetails> partialUpdate(CustomerDetails customerDetails) {
-        log.debug("Request to partially update CustomerDetails : {}", customerDetails);
+    public Optional<CustomerDetailsDTO> partialUpdate(CustomerDetailsDTO customerDetailsDTO) {
+        log.debug("Request to partially update CustomerDetails : {}", customerDetailsDTO);
 
         return customerDetailsRepository
-            .findById(customerDetails.getId())
+            .findById(customerDetailsDTO.getId())
             .map(existingCustomerDetails -> {
-                if (customerDetails.getGender() != null) {
-                    existingCustomerDetails.setGender(customerDetails.getGender());
-                }
-                if (customerDetails.getPhone() != null) {
-                    existingCustomerDetails.setPhone(customerDetails.getPhone());
-                }
-                if (customerDetails.getAddressLine1() != null) {
-                    existingCustomerDetails.setAddressLine1(customerDetails.getAddressLine1());
-                }
-                if (customerDetails.getAddressLine2() != null) {
-                    existingCustomerDetails.setAddressLine2(customerDetails.getAddressLine2());
-                }
-                if (customerDetails.getCity() != null) {
-                    existingCustomerDetails.setCity(customerDetails.getCity());
-                }
-                if (customerDetails.getCountry() != null) {
-                    existingCustomerDetails.setCountry(customerDetails.getCountry());
-                }
+                customerDetailsMapper.partialUpdate(existingCustomerDetails, customerDetailsDTO);
 
                 return existingCustomerDetails;
             })
-            .map(customerDetailsRepository::save);
+            .map(customerDetailsRepository::save)
+            .map(customerDetailsMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CustomerDetails> findAll(Pageable pageable) {
+    public Page<CustomerDetailsDTO> findAll(Pageable pageable) {
         log.debug("Request to get all CustomerDetails");
-        return customerDetailsRepository.findAll(pageable);
+        return customerDetailsRepository.findAll(pageable).map(customerDetailsMapper::toDto);
     }
 
-    public Page<CustomerDetails> findAllWithEagerRelationships(Pageable pageable) {
-        return customerDetailsRepository.findAllWithEagerRelationships(pageable);
+    public Page<CustomerDetailsDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return customerDetailsRepository.findAllWithEagerRelationships(pageable).map(customerDetailsMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<CustomerDetails> findOne(Long id) {
+    public Optional<CustomerDetailsDTO> findOne(Long id) {
         log.debug("Request to get CustomerDetails : {}", id);
-        return customerDetailsRepository.findOneWithEagerRelationships(id);
+        return customerDetailsRepository.findOneWithEagerRelationships(id).map(customerDetailsMapper::toDto);
     }
 
     @Override
