@@ -1,8 +1,5 @@
 package com.poc.redis.service.mapper;
 
-import com.poc.redis.domain.Product;
-import com.poc.redis.domain.ProductOrder;
-import com.poc.redis.domain.ShoppingCart;
 import com.poc.redis.service.dto.ProductDTO;
 import com.poc.redis.service.dto.ProductOrderDTO;
 import com.poc.redis.service.dto.ShoppingCartDTO;

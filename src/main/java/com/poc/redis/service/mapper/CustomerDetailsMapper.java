@@ -1,6 +1,5 @@
 package com.poc.redis.service.mapper;
 
-import com.poc.redis.domain.CustomerDetails;
 import com.poc.redis.domain.User;
 import com.poc.redis.service.dto.CustomerDetailsDTO;
 import com.poc.redis.service.dto.UserDTO;

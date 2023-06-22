@@ -1,6 +1,5 @@
 package com.poc.redis.service.impl;
 
-import com.poc.redis.domain.ProductCategory;
 import com.poc.redis.repository.ProductCategoryRepository;
 import com.poc.redis.service.ProductCategoryService;
 import com.poc.redis.service.dto.ProductCategoryDTO;

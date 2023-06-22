@@ -1,7 +1,5 @@
 package com.poc.redis.service.mapper;
 
-import com.poc.redis.domain.Product;
-import com.poc.redis.domain.ProductCategory;
 import com.poc.redis.service.dto.ProductCategoryDTO;
 import com.poc.redis.service.dto.ProductDTO;
 import org.mapstruct.*;

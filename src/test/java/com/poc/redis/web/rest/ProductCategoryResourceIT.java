@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.poc.redis.IntegrationTest;
-import com.poc.redis.domain.ProductCategory;
 import com.poc.redis.repository.ProductCategoryRepository;
 import com.poc.redis.service.dto.ProductCategoryDTO;
 import com.poc.redis.service.mapper.ProductCategoryMapper;

@@ -1,6 +1,5 @@
 package com.poc.redis.repository;
 
-import com.poc.redis.domain.ShoppingCart;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

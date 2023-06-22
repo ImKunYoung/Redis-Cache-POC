@@ -7,8 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.poc.redis.IntegrationTest;
-import com.poc.redis.domain.CustomerDetails;
-import com.poc.redis.domain.ShoppingCart;
 import com.poc.redis.domain.enumeration.OrderStatus;
 import com.poc.redis.domain.enumeration.PaymentMethod;
 import com.poc.redis.repository.ShoppingCartRepository;

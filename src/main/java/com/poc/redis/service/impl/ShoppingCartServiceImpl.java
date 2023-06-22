@@ -1,6 +1,5 @@
 package com.poc.redis.service.impl;
 
-import com.poc.redis.domain.ShoppingCart;
 import com.poc.redis.repository.ShoppingCartRepository;
 import com.poc.redis.service.ShoppingCartService;
 import com.poc.redis.service.dto.ShoppingCartDTO;

@@ -1,6 +1,5 @@
 package com.poc.redis.repository;
 
-import com.poc.redis.domain.Product;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
