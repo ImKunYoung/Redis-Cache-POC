@@ -80,5 +80,5 @@ relationship OneToMany {
     ProductCategory{product} to Product{productCategory(name) required}
 }
 
-service * with serviceClass
+service all with serviceImpl
 paginate Product, CustomerDetails, ProductCategory with pagination
