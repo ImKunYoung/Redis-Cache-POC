@@ -1,4 +1,4 @@
-package com.poc.redis.service.mapper;
+package com.poc.redis.application.mapper;
 
 import com.poc.redis.service.dto.ProductDTO;
 import com.poc.redis.service.dto.ProductOrderDTO;

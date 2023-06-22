@@ -2,8 +2,8 @@ package com.poc.redis.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.poc.redis.application.mapper.CustomerDetailsMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class CustomerDetailsMapperTest {
 

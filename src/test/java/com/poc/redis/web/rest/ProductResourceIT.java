@@ -12,7 +12,7 @@ import com.poc.redis.domain.enumeration.Size;
 import com.poc.redis.repository.ProductRepository;
 import com.poc.redis.service.ProductService;
 import com.poc.redis.service.dto.ProductDTO;
-import com.poc.redis.service.mapper.ProductMapper;
+import com.poc.redis.application.mapper.ProductMapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

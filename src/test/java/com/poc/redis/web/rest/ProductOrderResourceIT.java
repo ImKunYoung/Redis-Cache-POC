@@ -11,7 +11,7 @@ import com.poc.redis.IntegrationTest;
 import com.poc.redis.repository.ProductOrderRepository;
 import com.poc.redis.service.ProductOrderService;
 import com.poc.redis.service.dto.ProductOrderDTO;
-import com.poc.redis.service.mapper.ProductOrderMapper;
+import com.poc.redis.application.mapper.ProductOrderMapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

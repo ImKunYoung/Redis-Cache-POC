@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.poc.redis.IntegrationTest;
 import com.poc.redis.repository.ProductCategoryRepository;
 import com.poc.redis.service.dto.ProductCategoryDTO;
-import com.poc.redis.service.mapper.ProductCategoryMapper;
+import com.poc.redis.application.mapper.ProductCategoryMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

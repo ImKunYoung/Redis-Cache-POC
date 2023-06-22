@@ -3,7 +3,7 @@ package com.poc.redis.service.impl;
 import com.poc.redis.repository.CustomerDetailsRepository;
 import com.poc.redis.service.CustomerDetailsService;
 import com.poc.redis.service.dto.CustomerDetailsDTO;
-import com.poc.redis.service.mapper.CustomerDetailsMapper;
+import com.poc.redis.application.mapper.CustomerDetailsMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

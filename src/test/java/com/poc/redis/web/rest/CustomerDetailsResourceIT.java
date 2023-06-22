@@ -12,7 +12,7 @@ import com.poc.redis.domain.enumeration.Gender;
 import com.poc.redis.repository.CustomerDetailsRepository;
 import com.poc.redis.service.CustomerDetailsService;
 import com.poc.redis.service.dto.CustomerDetailsDTO;
-import com.poc.redis.service.mapper.CustomerDetailsMapper;
+import com.poc.redis.application.mapper.CustomerDetailsMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

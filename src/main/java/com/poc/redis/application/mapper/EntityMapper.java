@@ -1,4 +1,4 @@
-package com.poc.redis.service.mapper;
+package com.poc.redis.application.mapper;
 
 import java.util.List;
 import org.mapstruct.BeanMapping;
