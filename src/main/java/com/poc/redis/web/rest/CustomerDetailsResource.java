@@ -1,8 +1,8 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.model.CustomerDetails;
-import com.poc.redis.infrastructure.repository.CustomerDetailsRepository;
-import com.poc.redis.application.service.CustomerDetailsService;
+import com.poc.redis.repository.CustomerDetailsRepository;
+import com.poc.redis.service.CustomerDetailsService;
+import com.poc.redis.service.dto.CustomerDetailsDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link CustomerDetails}.
+ * REST controller for managing {@link com.poc.redis.domain.CustomerDetails}.
  */
 @RestController
 @RequestMapping("/api")
@@ -50,18 +50,18 @@ public class CustomerDetailsResource {
     /**
      * {@code POST  /customer-details} : Create a new customerDetails.
      *
-     * @param customerDetails the customerDetails to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customerDetails, or with status {@code 400 (Bad Request)} if the customerDetails has already an ID.
+     * @param customerDetailsDTO the customerDetailsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customerDetailsDTO, or with status {@code 400 (Bad Request)} if the customerDetails has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/customer-details")
-    public ResponseEntity<CustomerDetails> createCustomerDetails(@Valid @RequestBody CustomerDetails customerDetails)
+    public ResponseEntity<CustomerDetailsDTO> createCustomerDetails(@Valid @RequestBody CustomerDetailsDTO customerDetailsDTO)
         throws URISyntaxException {
-        log.debug("REST request to save CustomerDetails : {}", customerDetails);
-        if (customerDetails.getId() != null) {
+        log.debug("REST request to save CustomerDetails : {}", customerDetailsDTO);
+        if (customerDetailsDTO.getId() != null) {
             throw new BadRequestAlertException("A new customerDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CustomerDetails result = customerDetailsService.save(customerDetails);
+        CustomerDetailsDTO result = customerDetailsService.save(customerDetailsDTO);
         return ResponseEntity
             .created(new URI("/api/customer-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -71,23 +71,23 @@ public class CustomerDetailsResource {
     /**
      * {@code PUT  /customer-details/:id} : Updates an existing customerDetails.
      *
-     * @param id the id of the customerDetails to save.
-     * @param customerDetails the customerDetails to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customerDetails,
-     * or with status {@code 400 (Bad Request)} if the customerDetails is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the customerDetails couldn't be updated.
+     * @param id the id of the customerDetailsDTO to save.
+     * @param customerDetailsDTO the customerDetailsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customerDetailsDTO,
+     * or with status {@code 400 (Bad Request)} if the customerDetailsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the customerDetailsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/customer-details/{id}")
-    public ResponseEntity<CustomerDetails> updateCustomerDetails(
+    public ResponseEntity<CustomerDetailsDTO> updateCustomerDetails(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody CustomerDetails customerDetails
+        @Valid @RequestBody CustomerDetailsDTO customerDetailsDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update CustomerDetails : {}, {}", id, customerDetails);
-        if (customerDetails.getId() == null) {
+        log.debug("REST request to update CustomerDetails : {}, {}", id, customerDetailsDTO);
+        if (customerDetailsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, customerDetails.getId())) {
+        if (!Objects.equals(id, customerDetailsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -95,34 +95,34 @@ public class CustomerDetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        CustomerDetails result = customerDetailsService.update(customerDetails);
+        CustomerDetailsDTO result = customerDetailsService.update(customerDetailsDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customerDetails.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customerDetailsDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /customer-details/:id} : Partial updates given fields of an existing customerDetails, field will ignore if it is null
      *
-     * @param id the id of the customerDetails to save.
-     * @param customerDetails the customerDetails to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customerDetails,
-     * or with status {@code 400 (Bad Request)} if the customerDetails is not valid,
-     * or with status {@code 404 (Not Found)} if the customerDetails is not found,
-     * or with status {@code 500 (Internal Server Error)} if the customerDetails couldn't be updated.
+     * @param id the id of the customerDetailsDTO to save.
+     * @param customerDetailsDTO the customerDetailsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customerDetailsDTO,
+     * or with status {@code 400 (Bad Request)} if the customerDetailsDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the customerDetailsDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the customerDetailsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/customer-details/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<CustomerDetails> partialUpdateCustomerDetails(
+    public ResponseEntity<CustomerDetailsDTO> partialUpdateCustomerDetails(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody CustomerDetails customerDetails
+        @NotNull @RequestBody CustomerDetailsDTO customerDetailsDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update CustomerDetails partially : {}, {}", id, customerDetails);
-        if (customerDetails.getId() == null) {
+        log.debug("REST request to partial update CustomerDetails partially : {}, {}", id, customerDetailsDTO);
+        if (customerDetailsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, customerDetails.getId())) {
+        if (!Objects.equals(id, customerDetailsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -130,11 +130,11 @@ public class CustomerDetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<CustomerDetails> result = customerDetailsService.partialUpdate(customerDetails);
+        Optional<CustomerDetailsDTO> result = customerDetailsService.partialUpdate(customerDetailsDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customerDetails.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customerDetailsDTO.getId().toString())
         );
     }
 
@@ -146,12 +146,12 @@ public class CustomerDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customerDetails in body.
      */
     @GetMapping("/customer-details")
-    public ResponseEntity<List<CustomerDetails>> getAllCustomerDetails(
+    public ResponseEntity<List<CustomerDetailsDTO>> getAllCustomerDetails(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
         @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get a page of CustomerDetails");
-        Page<CustomerDetails> page;
+        Page<CustomerDetailsDTO> page;
         if (eagerload) {
             page = customerDetailsService.findAllWithEagerRelationships(pageable);
         } else {
@@ -164,20 +164,20 @@ public class CustomerDetailsResource {
     /**
      * {@code GET  /customer-details/:id} : get the "id" customerDetails.
      *
-     * @param id the id of the customerDetails to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDetails, or with status {@code 404 (Not Found)}.
+     * @param id the id of the customerDetailsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDetailsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/customer-details/{id}")
-    public ResponseEntity<CustomerDetails> getCustomerDetails(@PathVariable Long id) {
+    public ResponseEntity<CustomerDetailsDTO> getCustomerDetails(@PathVariable Long id) {
         log.debug("REST request to get CustomerDetails : {}", id);
-        Optional<CustomerDetails> customerDetails = customerDetailsService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(customerDetails);
+        Optional<CustomerDetailsDTO> customerDetailsDTO = customerDetailsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(customerDetailsDTO);
     }
 
     /**
      * {@code DELETE  /customer-details/:id} : delete the "id" customerDetails.
      *
-     * @param id the id of the customerDetails to delete.
+     * @param id the id of the customerDetailsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/customer-details/{id}")

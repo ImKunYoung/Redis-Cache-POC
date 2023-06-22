@@ -1,7 +1,7 @@
 {
   "applications": "*",
   "changelogDate": "20230622003031",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "shopping_cart",
   "fields": [

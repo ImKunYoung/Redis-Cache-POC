@@ -1,7 +1,7 @@
 {
   "applications": "*",
   "changelogDate": "20230622003032",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "product_order",
   "fields": [
