@@ -1,8 +1,9 @@
 package com.poc.redis.application.mapper;
 
-import com.poc.redis.domain.User;
 import com.poc.redis.application.dto.CustomerDetailsDTO;
-import com.poc.redis.service.dto.UserDTO;
+import com.poc.redis.application.dto.UserDTO;
+import com.poc.redis.domain.model.CustomerDetails;
+import com.poc.redis.domain.model.User;
 import org.mapstruct.*;
 
 /**
