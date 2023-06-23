@@ -1,8 +1,8 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.model.ProductCategory;
-import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
 import com.poc.redis.application.service.ProductCategoryService;
+import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
+import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link ProductCategory}.
+ * REST controller for managing {@link com.poc.redis.domain.model.ProductCategory}.
  */
 @RestController
 @RequestMapping("/api")
@@ -50,18 +50,18 @@ public class ProductCategoryResource {
     /**
      * {@code POST  /product-categories} : Create a new productCategory.
      *
-     * @param productCategory the productCategory to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new productCategory, or with status {@code 400 (Bad Request)} if the productCategory has already an ID.
+     * @param productCategoryDTO the productCategoryDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new productCategoryDTO, or with status {@code 400 (Bad Request)} if the productCategory has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/product-categories")
-    public ResponseEntity<ProductCategory> createProductCategory(@Valid @RequestBody ProductCategory productCategory)
+    public ResponseEntity<ProductCategoryDTO> createProductCategory(@Valid @RequestBody ProductCategoryDTO productCategoryDTO)
         throws URISyntaxException {
-        log.debug("REST request to save ProductCategory : {}", productCategory);
-        if (productCategory.getId() != null) {
+        log.debug("REST request to save ProductCategory : {}", productCategoryDTO);
+        if (productCategoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new productCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ProductCategory result = productCategoryService.save(productCategory);
+        ProductCategoryDTO result = productCategoryService.save(productCategoryDTO);
         return ResponseEntity
             .created(new URI("/api/product-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -71,23 +71,23 @@ public class ProductCategoryResource {
     /**
      * {@code PUT  /product-categories/:id} : Updates an existing productCategory.
      *
-     * @param id the id of the productCategory to save.
-     * @param productCategory the productCategory to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated productCategory,
-     * or with status {@code 400 (Bad Request)} if the productCategory is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the productCategory couldn't be updated.
+     * @param id the id of the productCategoryDTO to save.
+     * @param productCategoryDTO the productCategoryDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated productCategoryDTO,
+     * or with status {@code 400 (Bad Request)} if the productCategoryDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the productCategoryDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/product-categories/{id}")
-    public ResponseEntity<ProductCategory> updateProductCategory(
+    public ResponseEntity<ProductCategoryDTO> updateProductCategory(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody ProductCategory productCategory
+        @Valid @RequestBody ProductCategoryDTO productCategoryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update ProductCategory : {}, {}", id, productCategory);
-        if (productCategory.getId() == null) {
+        log.debug("REST request to update ProductCategory : {}, {}", id, productCategoryDTO);
+        if (productCategoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, productCategory.getId())) {
+        if (!Objects.equals(id, productCategoryDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -95,34 +95,34 @@ public class ProductCategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ProductCategory result = productCategoryService.update(productCategory);
+        ProductCategoryDTO result = productCategoryService.update(productCategoryDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productCategory.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productCategoryDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /product-categories/:id} : Partial updates given fields of an existing productCategory, field will ignore if it is null
      *
-     * @param id the id of the productCategory to save.
-     * @param productCategory the productCategory to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated productCategory,
-     * or with status {@code 400 (Bad Request)} if the productCategory is not valid,
-     * or with status {@code 404 (Not Found)} if the productCategory is not found,
-     * or with status {@code 500 (Internal Server Error)} if the productCategory couldn't be updated.
+     * @param id the id of the productCategoryDTO to save.
+     * @param productCategoryDTO the productCategoryDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated productCategoryDTO,
+     * or with status {@code 400 (Bad Request)} if the productCategoryDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the productCategoryDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the productCategoryDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/product-categories/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ProductCategory> partialUpdateProductCategory(
+    public ResponseEntity<ProductCategoryDTO> partialUpdateProductCategory(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ProductCategory productCategory
+        @NotNull @RequestBody ProductCategoryDTO productCategoryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update ProductCategory partially : {}, {}", id, productCategory);
-        if (productCategory.getId() == null) {
+        log.debug("REST request to partial update ProductCategory partially : {}, {}", id, productCategoryDTO);
+        if (productCategoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, productCategory.getId())) {
+        if (!Objects.equals(id, productCategoryDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -130,11 +130,11 @@ public class ProductCategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ProductCategory> result = productCategoryService.partialUpdate(productCategory);
+        Optional<ProductCategoryDTO> result = productCategoryService.partialUpdate(productCategoryDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productCategory.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productCategoryDTO.getId().toString())
         );
     }
 
@@ -145,9 +145,11 @@ public class ProductCategoryResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of productCategories in body.
      */
     @GetMapping("/product-categories")
-    public ResponseEntity<List<ProductCategory>> getAllProductCategories(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<ProductCategoryDTO>> getAllProductCategories(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
         log.debug("REST request to get a page of ProductCategories");
-        Page<ProductCategory> page = productCategoryService.findAll(pageable);
+        Page<ProductCategoryDTO> page = productCategoryService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -155,20 +157,20 @@ public class ProductCategoryResource {
     /**
      * {@code GET  /product-categories/:id} : get the "id" productCategory.
      *
-     * @param id the id of the productCategory to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productCategory, or with status {@code 404 (Not Found)}.
+     * @param id the id of the productCategoryDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productCategoryDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/product-categories/{id}")
-    public ResponseEntity<ProductCategory> getProductCategory(@PathVariable Long id) {
+    public ResponseEntity<ProductCategoryDTO> getProductCategory(@PathVariable Long id) {
         log.debug("REST request to get ProductCategory : {}", id);
-        Optional<ProductCategory> productCategory = productCategoryService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(productCategory);
+        Optional<ProductCategoryDTO> productCategoryDTO = productCategoryService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(productCategoryDTO);
     }
 
     /**
      * {@code DELETE  /product-categories/:id} : delete the "id" productCategory.
      *
-     * @param id the id of the productCategory to delete.
+     * @param id the id of the productCategoryDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/product-categories/{id}")

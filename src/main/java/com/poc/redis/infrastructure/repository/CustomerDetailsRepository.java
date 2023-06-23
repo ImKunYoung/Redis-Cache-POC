@@ -1,8 +1,9 @@
 package com.poc.redis.infrastructure.repository;
 
-import com.poc.redis.domain.model.CustomerDetails;
 import java.util.List;
 import java.util.Optional;
+
+import com.poc.redis.domain.model.CustomerDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;

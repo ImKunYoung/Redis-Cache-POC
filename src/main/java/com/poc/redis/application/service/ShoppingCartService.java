@@ -1,5 +1,6 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import com.poc.redis.domain.model.ShoppingCart;
 import java.util.List;
 import java.util.Optional;
@@ -11,33 +12,33 @@ public interface ShoppingCartService {
     /**
      * Save a shoppingCart.
      *
-     * @param shoppingCart the entity to save.
+     * @param shoppingCartDTO the entity to save.
      * @return the persisted entity.
      */
-    ShoppingCart save(ShoppingCart shoppingCart);
+    ShoppingCartDTO save(ShoppingCartDTO shoppingCartDTO);
 
     /**
      * Updates a shoppingCart.
      *
-     * @param shoppingCart the entity to update.
+     * @param shoppingCartDTO the entity to update.
      * @return the persisted entity.
      */
-    ShoppingCart update(ShoppingCart shoppingCart);
+    ShoppingCartDTO update(ShoppingCartDTO shoppingCartDTO);
 
     /**
      * Partially updates a shoppingCart.
      *
-     * @param shoppingCart the entity to update partially.
+     * @param shoppingCartDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<ShoppingCart> partialUpdate(ShoppingCart shoppingCart);
+    Optional<ShoppingCartDTO> partialUpdate(ShoppingCartDTO shoppingCartDTO);
 
     /**
      * Get all the shoppingCarts.
      *
      * @return the list of entities.
      */
-    List<ShoppingCart> findAll();
+    List<ShoppingCartDTO> findAll();
 
     /**
      * Get the "id" shoppingCart.
@@ -45,7 +46,7 @@ public interface ShoppingCartService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ShoppingCart> findOne(Long id);
+    Optional<ShoppingCartDTO> findOne(Long id);
 
     /**
      * Delete the "id" shoppingCart.

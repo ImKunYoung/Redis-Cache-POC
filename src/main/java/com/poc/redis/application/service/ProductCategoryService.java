@@ -1,5 +1,6 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.domain.model.ProductCategory;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -12,26 +13,26 @@ public interface ProductCategoryService {
     /**
      * Save a productCategory.
      *
-     * @param productCategory the entity to save.
+     * @param productCategoryDTO the entity to save.
      * @return the persisted entity.
      */
-    ProductCategory save(ProductCategory productCategory);
+    ProductCategoryDTO save(ProductCategoryDTO productCategoryDTO);
 
     /**
      * Updates a productCategory.
      *
-     * @param productCategory the entity to update.
+     * @param productCategoryDTO the entity to update.
      * @return the persisted entity.
      */
-    ProductCategory update(ProductCategory productCategory);
+    ProductCategoryDTO update(ProductCategoryDTO productCategoryDTO);
 
     /**
      * Partially updates a productCategory.
      *
-     * @param productCategory the entity to update partially.
+     * @param productCategoryDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<ProductCategory> partialUpdate(ProductCategory productCategory);
+    Optional<ProductCategoryDTO> partialUpdate(ProductCategoryDTO productCategoryDTO);
 
     /**
      * Get all the productCategories.
@@ -39,7 +40,7 @@ public interface ProductCategoryService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<ProductCategory> findAll(Pageable pageable);
+    Page<ProductCategoryDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" productCategory.
@@ -47,7 +48,7 @@ public interface ProductCategoryService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ProductCategory> findOne(Long id);
+    Optional<ProductCategoryDTO> findOne(Long id);
 
     /**
      * Delete the "id" productCategory.

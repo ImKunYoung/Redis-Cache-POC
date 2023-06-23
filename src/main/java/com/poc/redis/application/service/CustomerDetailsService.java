@@ -1,5 +1,6 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.application.dto.CustomerDetailsDTO;
 import com.poc.redis.domain.model.CustomerDetails;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -12,26 +13,26 @@ public interface CustomerDetailsService {
     /**
      * Save a customerDetails.
      *
-     * @param customerDetails the entity to save.
+     * @param customerDetailsDTO the entity to save.
      * @return the persisted entity.
      */
-    CustomerDetails save(CustomerDetails customerDetails);
+    CustomerDetailsDTO save(CustomerDetailsDTO customerDetailsDTO);
 
     /**
      * Updates a customerDetails.
      *
-     * @param customerDetails the entity to update.
+     * @param customerDetailsDTO the entity to update.
      * @return the persisted entity.
      */
-    CustomerDetails update(CustomerDetails customerDetails);
+    CustomerDetailsDTO update(CustomerDetailsDTO customerDetailsDTO);
 
     /**
      * Partially updates a customerDetails.
      *
-     * @param customerDetails the entity to update partially.
+     * @param customerDetailsDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<CustomerDetails> partialUpdate(CustomerDetails customerDetails);
+    Optional<CustomerDetailsDTO> partialUpdate(CustomerDetailsDTO customerDetailsDTO);
 
     /**
      * Get all the customerDetails.
@@ -39,7 +40,7 @@ public interface CustomerDetailsService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<CustomerDetails> findAll(Pageable pageable);
+    Page<CustomerDetailsDTO> findAll(Pageable pageable);
 
     /**
      * Get all the customerDetails with eager load of many-to-many relationships.
@@ -47,7 +48,7 @@ public interface CustomerDetailsService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<CustomerDetails> findAllWithEagerRelationships(Pageable pageable);
+    Page<CustomerDetailsDTO> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" customerDetails.
@@ -55,7 +56,7 @@ public interface CustomerDetailsService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<CustomerDetails> findOne(Long id);
+    Optional<CustomerDetailsDTO> findOne(Long id);
 
     /**
      * Delete the "id" customerDetails.
