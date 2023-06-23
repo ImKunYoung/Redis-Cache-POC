@@ -1,7 +1,10 @@
 package com.poc.redis.application.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 /**
  * A DTO representing a password change required data - current and new password.
  */
@@ -21,19 +24,4 @@ public class PasswordChangeDTO implements Serializable {
         this.newPassword = newPassword;
     }
 
-    public String getCurrentPassword() {
-        return currentPassword;
-    }
-
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
 }
