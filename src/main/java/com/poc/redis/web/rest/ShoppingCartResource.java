@@ -1,8 +1,8 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.domain.model.ShoppingCart;
-import com.poc.redis.infrastructure.repository.ShoppingCartRepository;
 import com.poc.redis.application.service.ShoppingCartService;
+import com.poc.redis.infrastructure.repository.ShoppingCartRepository;
+import com.poc.redis.application.dto.ShoppingCartDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,7 +20,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link ShoppingCart}.
+ * REST controller for managing {@link com.poc.redis.domain.model.ShoppingCart}.
  */
 @RestController
 @RequestMapping("/api")
@@ -45,17 +45,18 @@ public class ShoppingCartResource {
     /**
      * {@code POST  /shopping-carts} : Create a new shoppingCart.
      *
-     * @param shoppingCart the shoppingCart to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new shoppingCart, or with status {@code 400 (Bad Request)} if the shoppingCart has already an ID.
+     * @param shoppingCartDTO the shoppingCartDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new shoppingCartDTO, or with status {@code 400 (Bad Request)} if the shoppingCart has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/shopping-carts")
-    public ResponseEntity<ShoppingCart> createShoppingCart(@Valid @RequestBody ShoppingCart shoppingCart) throws URISyntaxException {
-        log.debug("REST request to save ShoppingCart : {}", shoppingCart);
-        if (shoppingCart.getId() != null) {
+    public ResponseEntity<ShoppingCartDTO> createShoppingCart(@Valid @RequestBody ShoppingCartDTO shoppingCartDTO)
+        throws URISyntaxException {
+        log.debug("REST request to save ShoppingCart : {}", shoppingCartDTO);
+        if (shoppingCartDTO.getId() != null) {
             throw new BadRequestAlertException("A new shoppingCart cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ShoppingCart result = shoppingCartService.save(shoppingCart);
+        ShoppingCartDTO result = shoppingCartService.save(shoppingCartDTO);
         return ResponseEntity
             .created(new URI("/api/shopping-carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -65,23 +66,23 @@ public class ShoppingCartResource {
     /**
      * {@code PUT  /shopping-carts/:id} : Updates an existing shoppingCart.
      *
-     * @param id the id of the shoppingCart to save.
-     * @param shoppingCart the shoppingCart to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated shoppingCart,
-     * or with status {@code 400 (Bad Request)} if the shoppingCart is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the shoppingCart couldn't be updated.
+     * @param id the id of the shoppingCartDTO to save.
+     * @param shoppingCartDTO the shoppingCartDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated shoppingCartDTO,
+     * or with status {@code 400 (Bad Request)} if the shoppingCartDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the shoppingCartDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/shopping-carts/{id}")
-    public ResponseEntity<ShoppingCart> updateShoppingCart(
+    public ResponseEntity<ShoppingCartDTO> updateShoppingCart(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody ShoppingCart shoppingCart
+        @Valid @RequestBody ShoppingCartDTO shoppingCartDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update ShoppingCart : {}, {}", id, shoppingCart);
-        if (shoppingCart.getId() == null) {
+        log.debug("REST request to update ShoppingCart : {}, {}", id, shoppingCartDTO);
+        if (shoppingCartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, shoppingCart.getId())) {
+        if (!Objects.equals(id, shoppingCartDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -89,34 +90,34 @@ public class ShoppingCartResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ShoppingCart result = shoppingCartService.update(shoppingCart);
+        ShoppingCartDTO result = shoppingCartService.update(shoppingCartDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, shoppingCart.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, shoppingCartDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /shopping-carts/:id} : Partial updates given fields of an existing shoppingCart, field will ignore if it is null
      *
-     * @param id the id of the shoppingCart to save.
-     * @param shoppingCart the shoppingCart to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated shoppingCart,
-     * or with status {@code 400 (Bad Request)} if the shoppingCart is not valid,
-     * or with status {@code 404 (Not Found)} if the shoppingCart is not found,
-     * or with status {@code 500 (Internal Server Error)} if the shoppingCart couldn't be updated.
+     * @param id the id of the shoppingCartDTO to save.
+     * @param shoppingCartDTO the shoppingCartDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated shoppingCartDTO,
+     * or with status {@code 400 (Bad Request)} if the shoppingCartDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the shoppingCartDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the shoppingCartDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/shopping-carts/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ShoppingCart> partialUpdateShoppingCart(
+    public ResponseEntity<ShoppingCartDTO> partialUpdateShoppingCart(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ShoppingCart shoppingCart
+        @NotNull @RequestBody ShoppingCartDTO shoppingCartDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update ShoppingCart partially : {}, {}", id, shoppingCart);
-        if (shoppingCart.getId() == null) {
+        log.debug("REST request to partial update ShoppingCart partially : {}, {}", id, shoppingCartDTO);
+        if (shoppingCartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, shoppingCart.getId())) {
+        if (!Objects.equals(id, shoppingCartDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -124,11 +125,11 @@ public class ShoppingCartResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ShoppingCart> result = shoppingCartService.partialUpdate(shoppingCart);
+        Optional<ShoppingCartDTO> result = shoppingCartService.partialUpdate(shoppingCartDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, shoppingCart.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, shoppingCartDTO.getId().toString())
         );
     }
 
@@ -138,7 +139,7 @@ public class ShoppingCartResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of shoppingCarts in body.
      */
     @GetMapping("/shopping-carts")
-    public List<ShoppingCart> getAllShoppingCarts() {
+    public List<ShoppingCartDTO> getAllShoppingCarts() {
         log.debug("REST request to get all ShoppingCarts");
         return shoppingCartService.findAll();
     }
@@ -146,20 +147,20 @@ public class ShoppingCartResource {
     /**
      * {@code GET  /shopping-carts/:id} : get the "id" shoppingCart.
      *
-     * @param id the id of the shoppingCart to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the shoppingCart, or with status {@code 404 (Not Found)}.
+     * @param id the id of the shoppingCartDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the shoppingCartDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/shopping-carts/{id}")
-    public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable Long id) {
+    public ResponseEntity<ShoppingCartDTO> getShoppingCart(@PathVariable Long id) {
         log.debug("REST request to get ShoppingCart : {}", id);
-        Optional<ShoppingCart> shoppingCart = shoppingCartService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(shoppingCart);
+        Optional<ShoppingCartDTO> shoppingCartDTO = shoppingCartService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(shoppingCartDTO);
     }
 
     /**
      * {@code DELETE  /shopping-carts/:id} : delete the "id" shoppingCart.
      *
-     * @param id the id of the shoppingCart to delete.
+     * @param id the id of the shoppingCartDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/shopping-carts/{id}")

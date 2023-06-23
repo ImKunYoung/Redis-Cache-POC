@@ -1,5 +1,6 @@
 package com.poc.redis.application.service;
 
+import com.poc.redis.application.dto.ProductDTO;
 import com.poc.redis.domain.model.Product;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -12,26 +13,26 @@ public interface ProductService {
     /**
      * Save a product.
      *
-     * @param product the entity to save.
+     * @param productDTO the entity to save.
      * @return the persisted entity.
      */
-    Product save(Product product);
+    ProductDTO save(ProductDTO productDTO);
 
     /**
      * Updates a product.
      *
-     * @param product the entity to update.
+     * @param productDTO the entity to update.
      * @return the persisted entity.
      */
-    Product update(Product product);
+    ProductDTO update(ProductDTO productDTO);
 
     /**
      * Partially updates a product.
      *
-     * @param product the entity to update partially.
+     * @param productDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<Product> partialUpdate(Product product);
+    Optional<ProductDTO> partialUpdate(ProductDTO productDTO);
 
     /**
      * Get all the products.
@@ -39,7 +40,7 @@ public interface ProductService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Product> findAll(Pageable pageable);
+    Page<ProductDTO> findAll(Pageable pageable);
 
     /**
      * Get all the products with eager load of many-to-many relationships.
@@ -47,7 +48,7 @@ public interface ProductService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Product> findAllWithEagerRelationships(Pageable pageable);
+    Page<ProductDTO> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" product.
@@ -55,7 +56,7 @@ public interface ProductService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<Product> findOne(Long id);
+    Optional<ProductDTO> findOne(Long id);
 
     /**
      * Delete the "id" product.
