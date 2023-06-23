@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.repository.ProductOrderRepository;
-import com.poc.redis.service.ProductOrderService;
+import com.poc.redis.application.service.ProductOrderService;
+import com.poc.redis.infrastructure.repository.ProductOrderRepository;
 import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
@@ -20,7 +20,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.poc.redis.domain.ProductOrder}.
+ * REST controller for managing {@link com.poc.redis.domain.model.ProductOrder}.
  */
 @RestController
 @RequestMapping("/api")

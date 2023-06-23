@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.repository.ProductCategoryRepository;
-import com.poc.redis.service.ProductCategoryService;
+import com.poc.redis.application.service.ProductCategoryService;
+import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
 import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
@@ -25,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.poc.redis.domain.ProductCategory}.
+ * REST controller for managing {@link com.poc.redis.domain.model.ProductCategory}.
  */
 @RestController
 @RequestMapping("/api")

@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
-import com.poc.redis.repository.CustomerDetailsRepository;
-import com.poc.redis.service.CustomerDetailsService;
+import com.poc.redis.application.service.CustomerDetailsService;
+import com.poc.redis.infrastructure.repository.CustomerDetailsRepository;
 import com.poc.redis.application.dto.CustomerDetailsDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import java.net.URI;
@@ -25,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.poc.redis.domain.CustomerDetails}.
+ * REST controller for managing {@link com.poc.redis.domain.model.CustomerDetails}.
  */
 @RestController
 @RequestMapping("/api")
