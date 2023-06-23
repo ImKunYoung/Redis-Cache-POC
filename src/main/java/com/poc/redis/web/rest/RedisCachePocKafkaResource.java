@@ -1,16 +1,8 @@
 package com.poc.redis.web.rest;
 
-import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
-
 import com.poc.redis.infrastructure.config.KafkaSseConsumer;
 import com.poc.redis.infrastructure.config.KafkaSseProducer;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.http.MediaType;
@@ -23,11 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/redis-cache-poc-kafka")
 public class RedisCachePocKafkaResource {
 
-    private final Logger log = LoggerFactory.getLogger(RedisCachePocKafkaResource.class);
     private final MessageChannel output;
 
     // TODO implement state of the art emitter repository to become 12 factor

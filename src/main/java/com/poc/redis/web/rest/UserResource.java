@@ -1,23 +1,16 @@
 package com.poc.redis.web.rest;
 
+import com.poc.redis.application.dto.AdminUserDTO;
+import com.poc.redis.application.service.MailService;
+import com.poc.redis.application.service.UserService;
 import com.poc.redis.domain.model.User;
 import com.poc.redis.infrastructure.config.Constants;
 import com.poc.redis.infrastructure.repository.UserRepository;
 import com.poc.redis.infrastructure.security.AuthoritiesConstants;
-import com.poc.redis.application.service.MailService;
-import com.poc.redis.application.service.UserService;
-import com.poc.redis.application.dto.AdminUserDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import com.poc.redis.web.errors.EmailAlreadyUsedException;
 import com.poc.redis.web.errors.LoginAlreadyUsedException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.Collections;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +24,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -56,6 +58,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/admin")
 public class UserResource {
@@ -75,8 +78,6 @@ public class UserResource {
             "lastModifiedDate"
         )
     );
-
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;

@@ -1,17 +1,24 @@
 package com.poc.redis.domain.model;
 
-import java.io.Serializable;
-import java.util.Objects;
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * An authority (a security role) used by Spring Security.
  */
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "jhi_authority")
 public class Authority implements Serializable {
@@ -24,35 +31,16 @@ public class Authority implements Serializable {
     @Column(length = 50)
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Authority)) {
-            return false;
-        }
-        return Objects.equals(name, ((Authority) o).name);
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Authority authority = (Authority) o;
+        return getName() != null && Objects.equals(getName(), authority.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Authority{" +
-            "name='" + name + '\'' +
-            "}";
+        return getClass().hashCode();
     }
 }

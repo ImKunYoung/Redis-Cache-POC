@@ -1,29 +1,30 @@
 package com.poc.redis.web.rest;
 
+import com.poc.redis.application.dto.AdminUserDTO;
+import com.poc.redis.application.dto.PasswordChangeDTO;
+import com.poc.redis.application.service.MailService;
+import com.poc.redis.application.service.UserService;
 import com.poc.redis.domain.model.User;
 import com.poc.redis.infrastructure.repository.UserRepository;
 import com.poc.redis.infrastructure.security.SecurityUtils;
-import com.poc.redis.application.service.MailService;
-import com.poc.redis.application.service.UserService;
-import com.poc.redis.application.dto.AdminUserDTO;
-import com.poc.redis.application.dto.PasswordChangeDTO;
 import com.poc.redis.web.errors.EmailAlreadyUsedException;
 import com.poc.redis.web.errors.InvalidPasswordException;
 import com.poc.redis.web.errors.LoginAlreadyUsedException;
 import com.poc.redis.web.vm.KeyAndPasswordVM;
 import com.poc.redis.web.vm.ManagedUserVM;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
@@ -34,8 +35,6 @@ public class AccountResource {
             super(message);
         }
     }
-
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
     private final UserRepository userRepository;
 

@@ -1,32 +1,31 @@
 package com.poc.redis.web.rest;
 
+import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.application.service.ProductOrderService;
 import com.poc.redis.infrastructure.repository.ProductOrderRepository;
-import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.web.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * REST controller for managing {@link com.poc.redis.domain.model.ProductOrder}.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ProductOrderResource {
-
-    private final Logger log = LoggerFactory.getLogger(ProductOrderResource.class);
 
     private static final String ENTITY_NAME = "productOrder";
 
