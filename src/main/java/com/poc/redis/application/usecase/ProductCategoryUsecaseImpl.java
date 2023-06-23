@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.domain.model.ProductCategory;
 import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class ProductCategoryServiceImpl implements ProductCategoryService {
+public class ProductCategoryUsecaseImpl implements ProductCategoryUsecase {
 
     private final ProductCategoryRepository productCategoryRepository;
 
     private final ProductCategoryMapper productCategoryMapper;
 
-    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository, ProductCategoryMapper productCategoryMapper) {
+    public ProductCategoryUsecaseImpl(ProductCategoryRepository productCategoryRepository, ProductCategoryMapper productCategoryMapper) {
         this.productCategoryRepository = productCategoryRepository;
         this.productCategoryMapper = productCategoryMapper;
     }

@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.domain.model.ProductOrder;
 import com.poc.redis.infrastructure.repository.ProductOrderRepository;
@@ -21,13 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class ProductOrderServiceImpl implements ProductOrderService {
+public class ProductOrderUsecaseImpl implements ProductOrderUsecase {
 
     private final ProductOrderRepository productOrderRepository;
 
     private final ProductOrderMapper productOrderMapper;
 
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductOrderMapper productOrderMapper) {
+    public ProductOrderUsecaseImpl(ProductOrderRepository productOrderRepository, ProductOrderMapper productOrderMapper) {
         this.productOrderRepository = productOrderRepository;
         this.productOrderMapper = productOrderMapper;
     }

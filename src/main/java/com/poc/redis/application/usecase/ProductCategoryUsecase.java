@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.domain.model.ProductCategory;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * Service Interface for managing {@link ProductCategory}.
  */
-public interface ProductCategoryService {
+public interface ProductCategoryUsecase {
     /**
      * Save a productCategory.
      *

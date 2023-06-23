@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.application.dto.ProductOrderDTO;
 import com.poc.redis.domain.model.ProductOrder;
@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * Service Interface for managing {@link ProductOrder}.
  */
-public interface ProductOrderService {
+public interface ProductOrderUsecase {
     /**
      * Save a productOrder.
      *

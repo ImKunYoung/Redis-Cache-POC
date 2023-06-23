@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.ProductDTO;
-import com.poc.redis.application.service.ProductService;
+import com.poc.redis.application.usecase.ProductUsecase;
 import com.poc.redis.infrastructure.repository.ProductRepository;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +37,12 @@ public class ProductResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProductService productService;
+    private final ProductUsecase productUsecase;
 
     private final ProductRepository productRepository;
 
-    public ProductResource(ProductService productService, ProductRepository productRepository) {
-        this.productService = productService;
+    public ProductResource(ProductUsecase productUsecase, ProductRepository productRepository) {
+        this.productUsecase = productUsecase;
         this.productRepository = productRepository;
     }
 
@@ -59,7 +59,7 @@ public class ProductResource {
         if (productDTO.getId() != null) {
             throw new BadRequestAlertException("A new product cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ProductDTO result = productService.save(productDTO);
+        ProductDTO result = productUsecase.save(productDTO);
         return ResponseEntity
             .created(new URI("/api/products/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -93,7 +93,7 @@ public class ProductResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ProductDTO result = productService.update(productDTO);
+        ProductDTO result = productUsecase.update(productDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productDTO.getId().toString()))
@@ -128,7 +128,7 @@ public class ProductResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ProductDTO> result = productService.partialUpdate(productDTO);
+        Optional<ProductDTO> result = productUsecase.partialUpdate(productDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,9 +151,9 @@ public class ProductResource {
         log.debug("REST request to get a page of Products");
         Page<ProductDTO> page;
         if (eagerload) {
-            page = productService.findAllWithEagerRelationships(pageable);
+            page = productUsecase.findAllWithEagerRelationships(pageable);
         } else {
-            page = productService.findAll(pageable);
+            page = productUsecase.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -168,7 +168,7 @@ public class ProductResource {
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
         log.debug("REST request to get Product : {}", id);
-        Optional<ProductDTO> productDTO = productService.findOne(id);
+        Optional<ProductDTO> productDTO = productUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(productDTO);
     }
 
@@ -181,7 +181,7 @@ public class ProductResource {
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         log.debug("REST request to delete Product : {}", id);
-        productService.delete(id);
+        productUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.UserDTO;
-import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.usecase.UserUsecase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +28,10 @@ public class PublicUserResource {
         Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey")
     );
 
-    private final UserService userService;
+    private final UserUsecase userUsecase;
 
-    public PublicUserResource(UserService userService) {
-        this.userService = userService;
+    public PublicUserResource(UserUsecase userUsecase) {
+        this.userUsecase = userUsecase;
     }
 
     /**
@@ -47,7 +47,7 @@ public class PublicUserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
+        final Page<UserDTO> page = userUsecase.getAllPublicUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -62,6 +62,6 @@ public class PublicUserResource {
      */
     @GetMapping("/authorities")
     public List<String> getAuthorities() {
-        return userService.getAuthorities();
+        return userUsecase.getAuthorities();
     }
 }

@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.domain.model.User;
 import java.nio.charset.StandardCharsets;
@@ -23,9 +23,9 @@ import tech.jhipster.config.JHipsterProperties;
  * We use the {@link Async} annotation to send emails asynchronously.
  */
 @Service
-public class MailService {
+public class MailUsecase {
 
-    private final Logger log = LoggerFactory.getLogger(MailService.class);
+    private final Logger log = LoggerFactory.getLogger(MailUsecase.class);
 
     private static final String USER = "user";
 
@@ -39,7 +39,7 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
-    public MailService(
+    public MailUsecase(
         JHipsterProperties jHipsterProperties,
         JavaMailSender javaMailSender,
         MessageSource messageSource,

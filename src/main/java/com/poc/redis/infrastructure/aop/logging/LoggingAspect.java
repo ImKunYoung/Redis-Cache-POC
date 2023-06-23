@@ -41,7 +41,7 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all Spring beans in the application's main packages.
      */
-    @Pointcut("within(com.poc.redis.infrastructure.repository..*)" + " || within(com.poc.redis.application.service..*)" + " || within(com.poc.redis.web.rest..*)")
+    @Pointcut("within(com.poc.redis.infrastructure.repository..*)" + " || within(com.poc.redis.application.usecase..*)" + " || within(com.poc.redis.web.rest..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

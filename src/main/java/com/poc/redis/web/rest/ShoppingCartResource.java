@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.ShoppingCartDTO;
-import com.poc.redis.application.service.ShoppingCartService;
+import com.poc.redis.application.usecase.ShoppingCartUsecase;
 import com.poc.redis.infrastructure.repository.ShoppingCartRepository;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +32,12 @@ public class ShoppingCartResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ShoppingCartService shoppingCartService;
+    private final ShoppingCartUsecase shoppingCartUsecase;
 
     private final ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCartResource(ShoppingCartService shoppingCartService, ShoppingCartRepository shoppingCartRepository) {
-        this.shoppingCartService = shoppingCartService;
+    public ShoppingCartResource(ShoppingCartUsecase shoppingCartUsecase, ShoppingCartRepository shoppingCartRepository) {
+        this.shoppingCartUsecase = shoppingCartUsecase;
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
@@ -55,7 +55,7 @@ public class ShoppingCartResource {
         if (shoppingCartDTO.getId() != null) {
             throw new BadRequestAlertException("A new shoppingCart cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ShoppingCartDTO result = shoppingCartService.save(shoppingCartDTO);
+        ShoppingCartDTO result = shoppingCartUsecase.save(shoppingCartDTO);
         return ResponseEntity
             .created(new URI("/api/shopping-carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -89,7 +89,7 @@ public class ShoppingCartResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ShoppingCartDTO result = shoppingCartService.update(shoppingCartDTO);
+        ShoppingCartDTO result = shoppingCartUsecase.update(shoppingCartDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, shoppingCartDTO.getId().toString()))
@@ -124,7 +124,7 @@ public class ShoppingCartResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ShoppingCartDTO> result = shoppingCartService.partialUpdate(shoppingCartDTO);
+        Optional<ShoppingCartDTO> result = shoppingCartUsecase.partialUpdate(shoppingCartDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -140,7 +140,7 @@ public class ShoppingCartResource {
     @GetMapping("/shopping-carts")
     public List<ShoppingCartDTO> getAllShoppingCarts() {
         log.debug("REST request to get all ShoppingCarts");
-        return shoppingCartService.findAll();
+        return shoppingCartUsecase.findAll();
     }
 
     /**
@@ -152,7 +152,7 @@ public class ShoppingCartResource {
     @GetMapping("/shopping-carts/{id}")
     public ResponseEntity<ShoppingCartDTO> getShoppingCart(@PathVariable Long id) {
         log.debug("REST request to get ShoppingCart : {}", id);
-        Optional<ShoppingCartDTO> shoppingCartDTO = shoppingCartService.findOne(id);
+        Optional<ShoppingCartDTO> shoppingCartDTO = shoppingCartUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(shoppingCartDTO);
     }
 
@@ -165,7 +165,7 @@ public class ShoppingCartResource {
     @DeleteMapping("/shopping-carts/{id}")
     public ResponseEntity<Void> deleteShoppingCart(@PathVariable Long id) {
         log.debug("REST request to delete ShoppingCart : {}", id);
-        shoppingCartService.delete(id);
+        shoppingCartUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

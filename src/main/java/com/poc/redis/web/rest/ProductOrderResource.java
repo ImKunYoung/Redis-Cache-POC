@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.ProductOrderDTO;
-import com.poc.redis.application.service.ProductOrderService;
+import com.poc.redis.application.usecase.ProductOrderUsecase;
 import com.poc.redis.infrastructure.repository.ProductOrderRepository;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +32,12 @@ public class ProductOrderResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProductOrderService productOrderService;
+    private final ProductOrderUsecase productOrderUsecase;
 
     private final ProductOrderRepository productOrderRepository;
 
-    public ProductOrderResource(ProductOrderService productOrderService, ProductOrderRepository productOrderRepository) {
-        this.productOrderService = productOrderService;
+    public ProductOrderResource(ProductOrderUsecase productOrderUsecase, ProductOrderRepository productOrderRepository) {
+        this.productOrderUsecase = productOrderUsecase;
         this.productOrderRepository = productOrderRepository;
     }
 
@@ -55,7 +55,7 @@ public class ProductOrderResource {
         if (productOrderDTO.getId() != null) {
             throw new BadRequestAlertException("A new productOrder cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ProductOrderDTO result = productOrderService.save(productOrderDTO);
+        ProductOrderDTO result = productOrderUsecase.save(productOrderDTO);
         return ResponseEntity
             .created(new URI("/api/product-orders/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -89,7 +89,7 @@ public class ProductOrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ProductOrderDTO result = productOrderService.update(productOrderDTO);
+        ProductOrderDTO result = productOrderUsecase.update(productOrderDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productOrderDTO.getId().toString()))
@@ -124,7 +124,7 @@ public class ProductOrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ProductOrderDTO> result = productOrderService.partialUpdate(productOrderDTO);
+        Optional<ProductOrderDTO> result = productOrderUsecase.partialUpdate(productOrderDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -141,7 +141,7 @@ public class ProductOrderResource {
     @GetMapping("/product-orders")
     public List<ProductOrderDTO> getAllProductOrders(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all ProductOrders");
-        return productOrderService.findAll();
+        return productOrderUsecase.findAll();
     }
 
     /**
@@ -153,7 +153,7 @@ public class ProductOrderResource {
     @GetMapping("/product-orders/{id}")
     public ResponseEntity<ProductOrderDTO> getProductOrder(@PathVariable Long id) {
         log.debug("REST request to get ProductOrder : {}", id);
-        Optional<ProductOrderDTO> productOrderDTO = productOrderService.findOne(id);
+        Optional<ProductOrderDTO> productOrderDTO = productOrderUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(productOrderDTO);
     }
 
@@ -166,7 +166,7 @@ public class ProductOrderResource {
     @DeleteMapping("/product-orders/{id}")
     public ResponseEntity<Void> deleteProductOrder(@PathVariable Long id) {
         log.debug("REST request to delete ProductOrder : {}", id);
-        productOrderService.delete(id);
+        productOrderUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.domain.model.ShoppingCart;
 import com.poc.redis.infrastructure.repository.ShoppingCartRepository;
@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartUsecaseImpl implements ShoppingCartUsecase {
 
     private final ShoppingCartRepository shoppingCartRepository;
 
     private final ShoppingCartMapper shoppingCartMapper;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, ShoppingCartMapper shoppingCartMapper) {
+    public ShoppingCartUsecaseImpl(ShoppingCartRepository shoppingCartRepository, ShoppingCartMapper shoppingCartMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.shoppingCartMapper = shoppingCartMapper;
     }

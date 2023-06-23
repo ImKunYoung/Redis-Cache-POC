@@ -2,8 +2,8 @@ package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.AdminUserDTO;
 import com.poc.redis.application.dto.PasswordChangeDTO;
-import com.poc.redis.application.service.MailService;
-import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.usecase.MailUsecase;
+import com.poc.redis.application.usecase.UserUsecase;
 import com.poc.redis.domain.model.User;
 import com.poc.redis.infrastructure.repository.UserRepository;
 import com.poc.redis.infrastructure.security.SecurityUtils;
@@ -38,14 +38,14 @@ public class AccountResource {
 
     private final UserRepository userRepository;
 
-    private final UserService userService;
+    private final UserUsecase userUsecase;
 
-    private final MailService mailService;
+    private final MailUsecase mailUsecase;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(UserRepository userRepository, UserUsecase userUsecase, MailUsecase mailUsecase) {
         this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
+        this.userUsecase = userUsecase;
+        this.mailUsecase = mailUsecase;
     }
 
     /**
@@ -62,8 +62,8 @@ public class AccountResource {
         if (isPasswordLengthInvalid(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        User user = userUsecase.registerUser(managedUserVM, managedUserVM.getPassword());
+        mailUsecase.sendActivationEmail(user);
     }
 
     /**
@@ -74,7 +74,7 @@ public class AccountResource {
      */
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
-        Optional<User> user = userService.activateRegistration(key);
+        Optional<User> user = userUsecase.activateRegistration(key);
         if (!user.isPresent()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
@@ -100,7 +100,7 @@ public class AccountResource {
      */
     @GetMapping("/account")
     public AdminUserDTO getAccount() {
-        return userService
+        return userUsecase
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new AccountResourceException("User could not be found"));
@@ -126,7 +126,7 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
         }
-        userService.updateUser(
+        userUsecase.updateUser(
             userDTO.getFirstName(),
             userDTO.getLastName(),
             userDTO.getEmail(),
@@ -146,7 +146,7 @@ public class AccountResource {
         if (isPasswordLengthInvalid(passwordChangeDto.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+        userUsecase.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
     }
 
     /**
@@ -156,9 +156,9 @@ public class AccountResource {
      */
     @PostMapping(path = "/account/reset-password/init")
     public void requestPasswordReset(@RequestBody String mail) {
-        Optional<User> user = userService.requestPasswordReset(mail);
+        Optional<User> user = userUsecase.requestPasswordReset(mail);
         if (user.isPresent()) {
-            mailService.sendPasswordResetMail(user.get());
+            mailUsecase.sendPasswordResetMail(user.get());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made
@@ -178,7 +178,7 @@ public class AccountResource {
         if (isPasswordLengthInvalid(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
+        Optional<User> user = userUsecase.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
             throw new AccountResourceException("No user was found for this reset key");
