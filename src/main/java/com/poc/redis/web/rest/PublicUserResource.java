@@ -4,6 +4,8 @@ import com.poc.redis.application.service.UserService;
 import com.poc.redis.application.dto.UserDTO;
 import java.util.*;
 import java.util.Collections;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.PaginationUtil;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class PublicUserResource {
@@ -23,8 +26,6 @@ public class PublicUserResource {
     private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
         Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey")
     );
-
-    private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
     private final UserService userService;
 

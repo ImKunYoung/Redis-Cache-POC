@@ -16,6 +16,8 @@ import java.util.*;
 import java.util.Collections;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +58,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/admin")
 public class UserResource {
@@ -75,8 +78,6 @@ public class UserResource {
             "lastModifiedDate"
         )
     );
-
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
