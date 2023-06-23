@@ -1,7 +1,7 @@
 package com.poc.redis.application.service;
 
 import com.poc.redis.domain.model.ProductCategory;
-import com.poc.redis.repository.ProductCategoryRepository;
+import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
 import com.poc.redis.application.dto.ProductCategoryDTO;
 import com.poc.redis.application.mapper.ProductCategoryMapper;
 import java.util.Optional;
