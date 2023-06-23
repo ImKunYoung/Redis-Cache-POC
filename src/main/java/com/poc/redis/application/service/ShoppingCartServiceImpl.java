@@ -8,19 +8,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Implementation for managing {@link ShoppingCart}.
  */
+@Slf4j
 @Service
 @Transactional
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-
-    private final Logger log = LoggerFactory.getLogger(ShoppingCartServiceImpl.class);
 
     private final ShoppingCartRepository shoppingCartRepository;
 
