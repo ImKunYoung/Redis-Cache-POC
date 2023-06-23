@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.ProductCategoryDTO;
-import com.poc.redis.application.service.ProductCategoryService;
+import com.poc.redis.application.usecase.ProductCategoryUsecase;
 import com.poc.redis.infrastructure.repository.ProductCategoryRepository;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +37,12 @@ public class ProductCategoryResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProductCategoryService productCategoryService;
+    private final ProductCategoryUsecase productCategoryUsecase;
 
     private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductCategoryResource(ProductCategoryService productCategoryService, ProductCategoryRepository productCategoryRepository) {
-        this.productCategoryService = productCategoryService;
+    public ProductCategoryResource(ProductCategoryUsecase productCategoryUsecase, ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryUsecase = productCategoryUsecase;
         this.productCategoryRepository = productCategoryRepository;
     }
 
@@ -60,7 +60,7 @@ public class ProductCategoryResource {
         if (productCategoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new productCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ProductCategoryDTO result = productCategoryService.save(productCategoryDTO);
+        ProductCategoryDTO result = productCategoryUsecase.save(productCategoryDTO);
         return ResponseEntity
             .created(new URI("/api/product-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -94,7 +94,7 @@ public class ProductCategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ProductCategoryDTO result = productCategoryService.update(productCategoryDTO);
+        ProductCategoryDTO result = productCategoryUsecase.update(productCategoryDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productCategoryDTO.getId().toString()))
@@ -129,7 +129,7 @@ public class ProductCategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ProductCategoryDTO> result = productCategoryService.partialUpdate(productCategoryDTO);
+        Optional<ProductCategoryDTO> result = productCategoryUsecase.partialUpdate(productCategoryDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -148,7 +148,7 @@ public class ProductCategoryResource {
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get a page of ProductCategories");
-        Page<ProductCategoryDTO> page = productCategoryService.findAll(pageable);
+        Page<ProductCategoryDTO> page = productCategoryUsecase.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -162,7 +162,7 @@ public class ProductCategoryResource {
     @GetMapping("/product-categories/{id}")
     public ResponseEntity<ProductCategoryDTO> getProductCategory(@PathVariable Long id) {
         log.debug("REST request to get ProductCategory : {}", id);
-        Optional<ProductCategoryDTO> productCategoryDTO = productCategoryService.findOne(id);
+        Optional<ProductCategoryDTO> productCategoryDTO = productCategoryUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(productCategoryDTO);
     }
 
@@ -175,7 +175,7 @@ public class ProductCategoryResource {
     @DeleteMapping("/product-categories/{id}")
     public ResponseEntity<Void> deleteProductCategory(@PathVariable Long id) {
         log.debug("REST request to delete ProductCategory : {}", id);
-        productCategoryService.delete(id);
+        productCategoryUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

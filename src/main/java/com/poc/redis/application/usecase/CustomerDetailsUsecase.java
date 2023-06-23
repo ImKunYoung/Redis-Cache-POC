@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.application.dto.CustomerDetailsDTO;
 import com.poc.redis.domain.model.CustomerDetails;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * Service Interface for managing {@link CustomerDetails}.
  */
-public interface CustomerDetailsService {
+public interface CustomerDetailsUsecase {
     /**
      * Save a customerDetails.
      *

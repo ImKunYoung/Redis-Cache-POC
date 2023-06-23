@@ -1,7 +1,7 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.CustomerDetailsDTO;
-import com.poc.redis.application.service.CustomerDetailsService;
+import com.poc.redis.application.usecase.CustomerDetailsUsecase;
 import com.poc.redis.infrastructure.repository.CustomerDetailsRepository;
 import com.poc.redis.web.errors.BadRequestAlertException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +37,12 @@ public class CustomerDetailsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CustomerDetailsService customerDetailsService;
+    private final CustomerDetailsUsecase customerDetailsUsecase;
 
     private final CustomerDetailsRepository customerDetailsRepository;
 
-    public CustomerDetailsResource(CustomerDetailsService customerDetailsService, CustomerDetailsRepository customerDetailsRepository) {
-        this.customerDetailsService = customerDetailsService;
+    public CustomerDetailsResource(CustomerDetailsUsecase customerDetailsUsecase, CustomerDetailsRepository customerDetailsRepository) {
+        this.customerDetailsUsecase = customerDetailsUsecase;
         this.customerDetailsRepository = customerDetailsRepository;
     }
 
@@ -60,7 +60,7 @@ public class CustomerDetailsResource {
         if (customerDetailsDTO.getId() != null) {
             throw new BadRequestAlertException("A new customerDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CustomerDetailsDTO result = customerDetailsService.save(customerDetailsDTO);
+        CustomerDetailsDTO result = customerDetailsUsecase.save(customerDetailsDTO);
         return ResponseEntity
             .created(new URI("/api/customer-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -94,7 +94,7 @@ public class CustomerDetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        CustomerDetailsDTO result = customerDetailsService.update(customerDetailsDTO);
+        CustomerDetailsDTO result = customerDetailsUsecase.update(customerDetailsDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customerDetailsDTO.getId().toString()))
@@ -129,7 +129,7 @@ public class CustomerDetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<CustomerDetailsDTO> result = customerDetailsService.partialUpdate(customerDetailsDTO);
+        Optional<CustomerDetailsDTO> result = customerDetailsUsecase.partialUpdate(customerDetailsDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -152,9 +152,9 @@ public class CustomerDetailsResource {
         log.debug("REST request to get a page of CustomerDetails");
         Page<CustomerDetailsDTO> page;
         if (eagerload) {
-            page = customerDetailsService.findAllWithEagerRelationships(pageable);
+            page = customerDetailsUsecase.findAllWithEagerRelationships(pageable);
         } else {
-            page = customerDetailsService.findAll(pageable);
+            page = customerDetailsUsecase.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -169,7 +169,7 @@ public class CustomerDetailsResource {
     @GetMapping("/customer-details/{id}")
     public ResponseEntity<CustomerDetailsDTO> getCustomerDetails(@PathVariable Long id) {
         log.debug("REST request to get CustomerDetails : {}", id);
-        Optional<CustomerDetailsDTO> customerDetailsDTO = customerDetailsService.findOne(id);
+        Optional<CustomerDetailsDTO> customerDetailsDTO = customerDetailsUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(customerDetailsDTO);
     }
 
@@ -182,7 +182,7 @@ public class CustomerDetailsResource {
     @DeleteMapping("/customer-details/{id}")
     public ResponseEntity<Void> deleteCustomerDetails(@PathVariable Long id) {
         log.debug("REST request to delete CustomerDetails : {}", id);
-        customerDetailsService.delete(id);
+        customerDetailsUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

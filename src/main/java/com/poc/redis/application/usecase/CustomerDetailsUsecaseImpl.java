@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.domain.model.CustomerDetails;
 import com.poc.redis.infrastructure.repository.CustomerDetailsRepository;
@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class CustomerDetailsServiceImpl implements CustomerDetailsService {
+public class CustomerDetailsUsecaseImpl implements CustomerDetailsUsecase {
 
     private final CustomerDetailsRepository customerDetailsRepository;
 
     private final CustomerDetailsMapper customerDetailsMapper;
 
-    public CustomerDetailsServiceImpl(CustomerDetailsRepository customerDetailsRepository, CustomerDetailsMapper customerDetailsMapper) {
+    public CustomerDetailsUsecaseImpl(CustomerDetailsRepository customerDetailsRepository, CustomerDetailsMapper customerDetailsMapper) {
         this.customerDetailsRepository = customerDetailsRepository;
         this.customerDetailsMapper = customerDetailsMapper;
     }

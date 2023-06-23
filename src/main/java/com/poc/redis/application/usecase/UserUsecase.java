@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.application.exception.EmailAlreadyUsedException;
 import com.poc.redis.application.exception.InvalidPasswordException;
@@ -33,7 +33,7 @@ import tech.jhipster.security.RandomUtil;
 @Slf4j
 @Service
 @Transactional
-public class UserService {
+public class UserUsecase {
 
     private final UserRepository userRepository;
 
@@ -43,7 +43,7 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(
+    public UserUsecase(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,

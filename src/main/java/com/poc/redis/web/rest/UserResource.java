@@ -1,8 +1,8 @@
 package com.poc.redis.web.rest;
 
 import com.poc.redis.application.dto.AdminUserDTO;
-import com.poc.redis.application.service.MailService;
-import com.poc.redis.application.service.UserService;
+import com.poc.redis.application.usecase.MailUsecase;
+import com.poc.redis.application.usecase.UserUsecase;
 import com.poc.redis.domain.model.User;
 import com.poc.redis.infrastructure.config.Constants;
 import com.poc.redis.infrastructure.repository.UserRepository;
@@ -82,16 +82,16 @@ public class UserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final UserService userService;
+    private final UserUsecase userUsecase;
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
+    private final MailUsecase mailUsecase;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService = userService;
+    public UserResource(UserUsecase userUsecase, UserRepository userRepository, MailUsecase mailUsecase) {
+        this.userUsecase = userUsecase;
         this.userRepository = userRepository;
-        this.mailService = mailService;
+        this.mailUsecase = mailUsecase;
     }
 
     /**
@@ -119,8 +119,8 @@ public class UserResource {
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         } else {
-            User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
+            User newUser = userUsecase.createUser(userDTO);
+            mailUsecase.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
@@ -150,7 +150,7 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }
-        Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
+        Optional<AdminUserDTO> updatedUser = userUsecase.updateUser(userDTO);
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
@@ -172,7 +172,7 @@ public class UserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
+        final Page<AdminUserDTO> page = userUsecase.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -191,7 +191,7 @@ public class UserResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
+        return ResponseUtil.wrapOrNotFound(userUsecase.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
     }
 
     /**
@@ -204,7 +204,7 @@ public class UserResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to delete User: {}", login);
-        userService.deleteUser(login);
+        userUsecase.deleteUser(login);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createAlert(applicationName, "A user is deleted with identifier " + login, login))

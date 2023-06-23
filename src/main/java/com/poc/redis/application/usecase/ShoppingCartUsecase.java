@@ -1,4 +1,4 @@
-package com.poc.redis.application.service;
+package com.poc.redis.application.usecase;
 
 import com.poc.redis.application.dto.ShoppingCartDTO;
 import com.poc.redis.domain.model.ShoppingCart;
@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Service Interface for managing {@link ShoppingCart}.
  */
-public interface ShoppingCartService {
+public interface ShoppingCartUsecase {
     /**
      * Save a shoppingCart.
      *
