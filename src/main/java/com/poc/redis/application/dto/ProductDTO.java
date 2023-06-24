@@ -6,14 +6,13 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
-@Data
 /**
- * A DTO for the {@link com.poc.redis.domain.Product} entity.
+ * A DTO for the {@link com.poc.redis.domain.model.Product} entity.
  */
+@Data
 @Schema(description = "Product sold by the Online store")
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ProductDTO implements Serializable {

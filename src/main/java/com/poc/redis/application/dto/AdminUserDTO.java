@@ -11,10 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
 
-@Data
 /**
  * A DTO representing a user, with his authorities.
  */
+@Data
 public class AdminUserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
