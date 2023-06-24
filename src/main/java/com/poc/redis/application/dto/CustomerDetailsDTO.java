@@ -6,10 +6,10 @@ import lombok.Data;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 
-@Data
 /**
- * A DTO for the {@link com.poc.redis.domain.CustomerDetails} entity.
+ * A DTO for the {@link com.poc.redis.domain.model.CustomerDetails} entity.
  */
+@Data
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class CustomerDetailsDTO implements Serializable {
 

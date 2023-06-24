@@ -7,13 +7,12 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Objects;
 import javax.validation.constraints.*;
 
-@Data
 /**
- * A DTO for the {@link com.poc.redis.domain.ShoppingCart} entity.
+ * A DTO for the {@link com.poc.redis.domain.model.ShoppingCart} entity.
  */
+@Data
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ShoppingCartDTO implements Serializable {
 
