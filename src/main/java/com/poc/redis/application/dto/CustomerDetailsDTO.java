@@ -21,16 +21,7 @@ public class CustomerDetailsDTO implements Serializable {
     @NotNull
     private String phone;
 
-    @NotNull
-    private String addressLine1;
-
-    private String addressLine2;
-
-    @NotNull
-    private String city;
-
-    @NotNull
-    private String country;
+    private AddressDTO address;
 
     private UserDTO user;
 

@@ -12,7 +12,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface CustomerDetailsMapper extends EntityMapper<CustomerDetailsDTO, CustomerDetails> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userLogin")
+    @Mapping(target = "address", source = "address")
     CustomerDetailsDTO toDto(CustomerDetails s);
+
+    @Mapping(target = "address", source = "address")
+    CustomerDetails toEntity(CustomerDetailsDTO customerDetailsDTO);
 
     @Named("userLogin")
     @BeanMapping(ignoreByDefault = true)
