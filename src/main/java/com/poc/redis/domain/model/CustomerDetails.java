@@ -2,6 +2,7 @@ package com.poc.redis.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poc.redis.domain.enumeration.Gender;
+import com.poc.redis.domain.valueobject.Address;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -41,20 +42,8 @@ public class CustomerDetails implements Serializable {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @NotNull
-    @Column(name = "address_line_1", nullable = false)
-    private String addressLine1;
-
-    @Column(name = "address_line_2")
-    private String addressLine2;
-
-    @NotNull
-    @Column(name = "city", nullable = false)
-    private String city;
-
-    @NotNull
-    @Column(name = "country", nullable = false)
-    private String country;
+    @Embedded
+    private Address address;
 
     @OneToOne(optional = false)
     @NotNull
